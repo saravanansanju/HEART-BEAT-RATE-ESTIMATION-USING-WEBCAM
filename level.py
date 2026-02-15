@@ -1,0 +1,57 @@
+Top cuisines
+
+import pandas as pd
+
+df = pd.read_csv('Dataset .csv')
+cuisines = df['Cuisines'].str.split(', ').explode()
+top_cuisines = cuisines.value_counts().head(3)
+percentages = (top_cuisines / len(df) * 100).round(2)
+print(percentages)
+
+city analysis
+import pandas as pd
+
+df = pd.read_csv('Dataset .csv')
+
+# 1. City with highest number of restaurants
+city_counts = df['City'].value_counts()
+highest_count_city = city_counts.index[0]
+print(f"City with most restaurants: {highest_count_city} ({city_counts.iloc[0]} restaurants)")
+
+# 2. Average rating for each city
+city_avg_ratings = df.groupby('City')['Aggregate rating'].mean().round(2)
+print("\nAverage ratings by city:")
+print(city_avg_ratings)
+
+# 3. City with highest average rating
+highest_rated_city = city_avg_ratings.idxmax()
+print(f"\nCity with highest average rating: {highest_rated_city} ({city_avg_ratings.max()})")
+
+price range distribution
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('Dataset .csv')
+
+# Price range distribution
+price_counts = df['Price range'].value_counts().sort_index()
+plt.bar(price_counts.index, price_counts.values)
+plt.xlabel('Price Range')
+plt.ylabel('Number of Restaurants')
+plt.title('Distribution of Price Ranges')
+plt.show()
+
+online delivery
+import pandas as pd
+
+df = pd.read_csv('Dataset .csv')
+
+# 1. Percentage of restaurants with online delivery
+delivery_percentage = (df['Has Online delivery'] == 'Yes').mean() * 100
+print(f"Percentage with online delivery: {delivery_percentage:.2f}%")
+
+# 2. Compare average ratings with and without online delivery
+delivery_ratings = df.groupby('Has Online delivery')['Aggregate rating'].mean()
+print(f"\nAverage ratings:")
+print(delivery_ratings)
+
